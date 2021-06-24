@@ -1,0 +1,237 @@
+----------
+Code Quality Improvement Using Jenkins
+----------
+
+Coding standards are rules that define the coding styles and conventions that are common across an organization for better understanding of the product development.
+
+Coding standards include both aesthetic aspects such as formatting, and bad practice such as missing brackets after a condition in Java.
+
+A consistent coding style makes it easy to work on the code written by other developers by making it clean and readable.
+
+---
+Code Quality Metrics
+---
+Code quality metrics include different aspects of code, such as coding standards and best practices to code coverage, along with compiler warnings to TODO comments.
+
+Number of lines of code
+Average code complexity
+Poor coding practices
+Potential bugs
+
+
+Code Quality Tools
+---
+CheckStyle
+Cobertura
+SonarQube
+FindBugs
+StyleCop
+
+
+Code Quality in Build Process
+---
+Before working with Jenkins, it is important to understand code quality metrics as an isolated entity with one framework or server and make it part of a broader process.
+The first level of code quality integration is the IDE.
+
+
+Code Quality in Build Process
+---
+As code coverage analysis and other analysis tools can be quite slow to run, it is recommended to run code quality analysis job separately.
+
+• Code quality reporting is a relatively passive process.
+• One has to search for the information on the build server, rather than simply reporting on code quality.
+• It is important to set up a dedicated code quality build that runs after the build and test, and configure the build to fail.
+• Jenkins provides the facility to do code quality reporting or one can also do it in build script.
+• The advantage of configuring code quality outside the build script is that one can change code quality build failing criteria more easily without hindering the source code.
+
+
+
+---
+SonarQube
+---
+Sonar is a tool that centralizes a range of code quality metrics into a single website. It uses Maven plugins to analyze Maven projects and generate a set of code quality metrics reports.
+
+• SonarQube generates reports on code coverage, rule compliance and documentation, complexity, maintainability, and technical debt.
+• It can be extend to add support for other languages.
+• The rules configured centrally on the Sonar website and the Maven project don’t require any particular configuration.
+• This makes Sonar highly suitable for working on Maven projects.
+
+
+SonarQube with Jenkins
+---
+The Jenkins Sonar Pluginprovides the facility to define Sonar instances for all the projects and activates Sonar in particular builds.
+• One can run Sonar server on a separate machine or on the same Jenkins instance.
+• Jenkins instance must have JDBC access to the Sonar database. This is the only constraint.
+• Sonar injects code quality metrics directly into the database.
+
+
+SonarQube with Jenkins
+---
+• Once installed from the plugin manager, configure the Jenkins Sonar plugin in the Configure System screen, under the Sonar section.
+• Define the Sonar instances. By default, it assumes that Sonar is running locally with the default embedded database.
+• For a production environment, run Sonar on a real database such as MySQL.
+• Configure the JDBC connection to the production Sonar database in Jenkins by clicking on the Advancedbutton in the configuration settings.
+
+
+Sonar Configuration
+---
+• Configure Sonar to run with one of the long-running Jenkins build jobs.
+• It is not recommended to run the Sonar build more than once in a day.
+• The default configuration executes a Sonar build in a Sonar-enabled build job when the job is triggered by a periodically scheduled build or by a manual build.
+• To activate Sonar in build job with the system-wide configuration, check the Sonar option in the Post-Build Actions.
+• Sonar will run every time the build is started by one of the triggers.
+
+
+
+
+------
+https://github.com/insighttechworld/simple-java-maven-app
+
+https://github.com/insighttechworld/Simple-DevOps-Project
+
+https://github.com/insighttechworld/hello-world
+------
+
+
+Apache Maven
+Maven is a powerful project management tool that is based on POM (project object model). It is used for projects build, dependency and documentation. It simplifies the build process like ANT. ... In short terms we can tell maven is a tool that can be used for building and managing any Java-based project.
+
+Making the build process easy
+Providing a uniform build system
+Providing quality project information
+Encouraging better development practices
+Making the build process easy
+While using Maven doesn’t eliminate the need to know about the underlying mechanisms, Maven does shield developers from many details.
+
+What is POM XML Maven?
+POM is an acronym for Project Object Model. The pom. xml file contains information of project and configuration information for the maven to build the project such as dependencies, build directory, source directory, test source directory, plugin, goals etc. Maven reads the pom. xml file, then executes the goal.
+POM - Project Object Model
+XML - Extensive Markup Language
+
+
+Maven Setup
+----
+
+google.com
+search for maven download
+choose the mave official website
+and copy the bin.zp file
+
+cd /opt
+wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+ls -l 
+unzip apache-maven-3.6.3
+mv apache-maven-3.6.3 maven
+cd /opt/maven
+pwd
+
+/opt/maven
+
+Let's set maven path
+
+cd ~
+vi .bash_profile
+
+M2_HOME=/opt/maven
+M2=/opt/maven
+:$M2:$M2_HOME   --> should be included to the line 'PATH'
+
+save and quit
+
+Final Output of your file should look like below:
+M2_HOME=/opt/maven
+M2=/opt/maven
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64
+PATH=$PATH:$HOME/bin:$JAVA_HOME:$M2:$M2_HOME
+
+
+# source .bash_profile
+
+# mvn --version
+# echo $M2_HOME
+# echo $M2
+
+
+>>Now go to Jenkins to coomplete the configuration
+Install maven plugin
+- Manage Jenkins
+- Manage Plugins
+- Available
+- search for maven
+- choose Maven Integration & Maven Invoker
+- Install without save
+
+>>Now to Setup Maven path
+- Manage Jenkins
+- Global Tool COnfiguration
+- scroll to Maven
+- Add Maven
+    Name: M2_HOME
+    Maven Home: /opt/maven
+Apply & Save
+
+Now Let's build our first maven job
+- New Item
+- Name: First_Maven_Job
+- Select Maven Project
+- Ok
+- Description
+- Source Code Manager
+- Git
+- Copy the repository url and paste here
+- Branch */Master
+- Build
+- Root POM: pom.xml
+- Goals and options: clean install package
+- Apply and Save
+- Build Now
+
+
+
+https://start.spring.io/
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+>>>Jira Software
+
+Jira software is a project management tool for issue tracking and bug releated to software. It is a tickecting software used to management task in team.
+
+This software is used for bug tracking, issue tracking, and project management. The name "JIRA" is actually inherited from the Japanese word "Gojira" which means "Godzilla". The basic use of this tool is to track issue and bugs related to your software and Mobile apps. It is also used for project management.
+
+
+Jira Service Desk/Jira ticketing software
+ServiceNow
+Jitbit
+HubSpot
+
+>>>Kanban Board
+is an gile projectmanagement tool designed to help vusialize work. A kanban board is an agile project management tool designed to help visualize work, limit work-in-progress, and maximize efficiency (or flow). ... Kanban boards use cards, columns, and continuous improvement to help technology and service teams commit to the right amount of work, and get it done!
+
+Structure of Kanban Board
+To-do       In-Progress 	Done
+
+The basic structure of the Kanban board online has three columns: to-do, in-progress, and done. Each column represents the stage of development from the beginning when ideas are created, to the work in progress, and then finally, to when the work has been completed.
+
+
+>>>Confluence
+Confluence is a collaboration wiki tool used to help teams to collaborate and share knowledge efficiently. With confluence, we can capture project requirements, assign tasks to specific users, and manage several calendars at once with the help of Team Calendars add-on.
+
+What is confluence tool used for?
+About Confluence
+
+Create, collaborate, and organize all your work in one place. Confluence is a team workspace where knowledge and collaboration meet. Dynamic pages give your team a place to create, capture, and collaborate on any project or idea.
+
+Once you know what kinds of spaces your organization will need, it's time to create your first space.
+Go to your Confluence site.
+From the home screen, select Create Space.
+Select the type of space you'd like to create.
+Fill in the Space name, Space key, and other details.
+Set permissions for your space.
+Select Create.
+
+
+Tools like Confluence
+- Evernote
+- xwiki
+- DOkuwiki
